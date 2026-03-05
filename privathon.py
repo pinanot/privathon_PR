@@ -1,3 +1,5 @@
+assert 0, "ver 0.0.1 isn't supported"
+
 import builtins as __builtin__
 
 """
