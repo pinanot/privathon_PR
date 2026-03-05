@@ -1,5 +1,3 @@
-assert 0, "ver 0.0.1 isn't supported"
-
 import builtins as __builtin__
 
 """
@@ -39,12 +37,12 @@ private scoped python
 
 ### LAMBDAS
 
-1. 1 builtin scope
+1. 3 builtin scope
 2. 0 public scope
 3. 0 local scope
 4. 0 private scope
 
-#### 0 builtin scope
+#### 3 builtin scope
 
  - __on_builtin_scope__ = lambda name : lambda value : setattr(__builtin__, name, value)
 
@@ -140,6 +138,25 @@ class AmamiyaGoro:
 
 - fin -
 ````
+
+ - getter_and_setter = lambda getter : lambda setter : property(fget = getter, fset = setter)
+
+````markdown
+# @getter_and_setter decorator
+
+## for example to make property "example"
+
+```python
+@getter_and_setter
+def example(self):
+    return 45510
+
+@example
+def example(self, value):
+    raise AttributeError("constant is immutable")
+```
+
+````
  
  - end
 
@@ -180,13 +197,14 @@ class AmamiyaGoro:
 
 ### CLASSES
 
-1. 0 builtin scope
+1. 1 builtin scope
 2. 0 public scope
 3. 0 local scope
 4. 0 private scope
 
 #### 0 builtin scope
 
+ - ConstantImmutablityFaultError(constant is immutable"
  - end
 
 #### 0 public scope
@@ -207,3 +225,6 @@ __builtin__.__on_builtin_scope__ = lambda name : lambda value : setattr(__builti
 
 @__on_builtin_scope__("__builtin_scope__")
 __builtin_scope__ = lambda named_obj : __on_builtin_scope__(named_obj.__name__, named_obj)
+
+@__builtin_scope__
+getter_and_setter = lambda getter : lambda setter : property(fget = getter, fset = setter)
