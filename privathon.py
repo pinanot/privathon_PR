@@ -73,10 +73,10 @@ private scoped python
 
 #### 4 builtin scope
 
- - __on_builtin_scope__ = __clsr__(lambda name, value : setattr(__builtin__, name, value))
+ - __set_builtin_scope__ = __clsr__(lambda name, value : setattr(__builtin__, name, value))
 
 ````markdown
-# @__on_builtin_scope_(name : str) decorator
+# @__set_builtin_scope__(name : str) decorator
 
 set name as (name : str) to set var in builtin scope
 
@@ -85,7 +85,7 @@ set name as (name : str) to set var in builtin scope
 1. variable
 
 ```python
-@__on_builtin_scope__("example")
+@__set_builtin_scope__("example")
 _ = 45510
 
 print(example == 45510) # True
@@ -94,7 +94,7 @@ print(example == 45510) # True
 2. lambda
 
 ```python
-@__on_builtin_scope__("example")
+@__set_builtin_scope__("example")
 _ = lambda : 45510
 
 print(example() == 45510) # True
@@ -103,7 +103,7 @@ print(example() == 45510) # True
 3. function
 
 ```python
-@__on_builtin_scope__("example")
+@__set_builtin_scope__("example")
 def example():
     return 45510
 
@@ -113,7 +113,7 @@ print(example() == 45510) # True
 4. class
 
 ```python
-@__on_builtin_scope__("AmamiyaGoro")
+@__set_builtin_scope__("AmamiyaGoro")
 class AmamiyaGoro:
     def __str__(self):
         return "Social Justice"
@@ -126,15 +126,15 @@ class HoshinoAkuamarin(AmamiyaGoro):
  - fin -
 ````
 
- - __builtin_scope__ = lambda named_obj : __on_builtin_scope__(named_obj.__name__, named_obj)
+ - __on_builtin_scope__ = lambda named_obj : __set_builtin_scope__(named_obj.__name__, named_obj)
 
 ````markdown
-# @__builtin_scope__ decorator
+# @__on_builtin_scope__ decorator
 
 1. function
 
 ```python
-@__builtin_scope__
+@__on_builtin_scope__
 def example():
     return 45510
 ```
@@ -142,7 +142,7 @@ def example():
 is
 
 ```python
-@__on_builtin_scope__("example")
+@__set_builtin_scope__("example")
 def example():
     return 45510
 ```
@@ -150,7 +150,7 @@ def example():
 2. class
 
 ```python
-@__builtin_scope__
+@__on_builtin_scope__
 class AmamiyaGoro:
     def __str__(self):
         return "Social Justice"
@@ -159,7 +159,7 @@ class AmamiyaGoro:
 is
 
 ```python
-@__on__=builtin_scope__("AmamiyaGoro")
+@__set_builtin_scope__("AmamiyaGoro")
 class AmamiyaGoro:
     def __str__(self):
         return "Social Justice"
@@ -260,10 +260,10 @@ def example(self, value):
 """
 
 @__clsr__
-__builtin__.__on_builtin_scope__ = lambda name, value : setattr(__builtin__, name, value)
+__builtin__.__set_builtin_scope__ = lambda name, value : setattr(__builtin__, name, value)
 
-@__on_builtin_scope__("__builtin_scope__")
-__builtin_scope__ = lambda named_obj : __on_builtin_scope__(named_obj.__name__, named_obj)
+@__set_builtin_scope__("__builtin_scope__")
+__on_builtin_scope__ = lambda named_obj : __set_builtin_scope__(named_obj.__name__, named_obj)
 
 @__on_builtin_scope__("getter_and_setter")
 @__clsr__
@@ -297,3 +297,10 @@ def raise_constant_err():
 
 @__on_builtin_scope__("const")
 const = lambda constant_function : getter_and_setter(constant_function)(raise_constant_err)
+
+def static(var):
+    @getter_and_setter(lambda self : var)
+    def ret(self, value):
+        nonlocal var
+        var = value
+    return ret
