@@ -1,3 +1,4 @@
+from types import SimpleNamespace as namespace
 from martialaw import martialaw as __clsr__
 import builtins as __builtin__
 
@@ -9,17 +10,18 @@ private scoped python
 ## DEPENDENCY
 
 1. 1 modules
-2. 1 module::functions
-3. 0 module::all_functions
+2. 2 module::functions / module::classes
+3. 0 module::all_functions / 
 
 ### 1 modules
 
  - builtins as __builtin__
  - end
 
-### 1 module::functions
+### 1 module::functions / module::classes
 
  - martialaw::martialaw as __clsr__
+ - types::SimpleNamespace as namespace
  - end
 
 ### 0 module::all_functions
@@ -304,3 +306,5 @@ def static(var):
         nonlocal var
         var = value
     return ret
+
+forgetedname1 = lambda value : const(lambda self : value)
