@@ -355,6 +355,11 @@ class private(type):
 
     @staticmethod
     def sealed_value(var):
+        """
+        # function sealed_value
+        
+         - fin -
+        """
         @private.seal(lambda self : var)
         def ret(self, value):
             nonlocal var
@@ -372,10 +377,18 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
     static_decocls = lambda cls : static(call_constant_functor(cls))
     
     def __new__(metacls, name, *argv):
-        L = len(argv)
-        assert L * L == L + L, f"private get 1 or 3 arguments but {L} given"
+        """
+        # privathon private class constructor
         
-        if L:
+        ## as constructor
+        ## as function
+        
+         - fin -
+        """
+        L = len(argv)
+        assert L * L == L + L, f"private get 1 or 3 arguments but {L} given" # L(L - 2) = 0 ↔ L = 0 ∨ L = 2
+        
+        if L: # L == 2. check "as constructor
             __dict__ = argv[1]
             @const
             def private(self, private_wraps = {}):
@@ -393,7 +406,7 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
                         del private_wraps[selfid]
                     return type("PrivatrWrapper", (), {i : (private if i == "private" else (__del__ if i == "__del__" else (__smart_deco_wraps__(j)(__partial__(j, this = self, __private__ = __private__)) if callable(j) else j)) for i, j in __dict__.items() if i != "__init__"}
            return type(metacls, name, argv[0], {i : private if i == "private" else (__smart_deco_wraps__(j)(__parital__(j, this = metacls, __private__ = metacls)) if callable(j) else j for i, j in __dict__.items()}
-        else: return name.private
+        else: return name.private # if L == 1 then just return private. check "as function"
 
 @__set_builtin_scope__("salt")
 salt = lambda : hash(str(__unix_time__() + __random_of_unit_interval__()))
