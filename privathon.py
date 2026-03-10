@@ -293,6 +293,9 @@ def raise_constant_err():
     """
     raise constant_err
 
+@__set_builtin_scope__("salt")
+salt = lambda : hash(str(__unix_time__() + __random_of_unit_interval__()))
+
 class private(type):
     """
     # metaclass private
@@ -407,6 +410,3 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
                     return type("PrivatrWrapper", (), {i : (private if i == "private" else (__del__ if i == "__del__" else (__smart_deco_wraps__(j)(__partial__(j, this = self, __private__ = __private__)) if callable(j) else j)) for i, j in __dict__.items() if i != "__init__"}
            return type(metacls, name, argv[0], {i : private if i == "private" else (__smart_deco_wraps__(j)(__parital__(j, this = metacls, __private__ = metacls)) if callable(j) else j for i, j in __dict__.items()}
         else: return name.private # if L == 1 then just return private. check "as function"
-
-@__set_builtin_scope__("salt")
-salt = lambda : hash(str(__unix_time__() + __random_of_unit_interval__()))
