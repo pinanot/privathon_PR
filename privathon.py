@@ -39,8 +39,8 @@ private scoped python
 ## RESOURCES
 
 1. 1 CONSTANTS
-2. 7 LAMBDAS
-3. 2 FUNCTIONS
+2. 4 LAMBDAS
+3. 1 FUNCTIONS
 4. 2 CLASSES
 
 ### 1 CONSTANTS
@@ -74,7 +74,7 @@ private scoped python
 
  - end
 
-### 4 LAMBDAS
+### 9 LAMBDAS
 
 1. 4 builtin scope
 2. 0 public scope
@@ -178,60 +178,10 @@ class AmamiyaGoro:
 - fin -
 ````
 
- - getter_and_setter = __clsr__(lambda getter, setter : property(fget = getter, fset = setter))
-
-````markdown
-# @getter_and_setter decorator
-
-## for example to make property "example"
-
-```python
-@getter_and_setter
-def example(self):
-    return 45510
-
-@example
-def example(self, value):
-    raise AttributeError("constant is immutable")
-```
-
-````
-
- - const = lambda constant_function : getter_and_setter(constant_function)(raise_constant_err)
-
-````markdown
-# @const decorator
-
- - fin -
-````
- - sealed_value = lambda value : const(lambda self : value)
-
-````markdown
-# function sealed_value
-
- - fin -
-````
-
- - static = __clsr__(lambda __static__, func : __smart_deco_wraps__(__partial__(func, __static__ = __static__)))
-
-````markdown
-# @static(__static__) decorator
-
- - fin -
-````
-
  - call_constant_functor = lambda f : f()
 
 ````markdown
 # function call_constant_functor
-
- - fin -
-````
-
- - static_decocls = lambda cls : static(call_constant_functor(cls))
-
-````markdown
-# decorator static_decocls
 
  - fin -
 ````
@@ -258,21 +208,20 @@ def example(self, value):
 
  - end
 
-### 2 FUCNTIONS
+### 1 FUCNTIONS
 
-1. 2 builtin scope
-2. 0 public scope
+1. 0 builtin scope
+2. 1 public scope
 3. 0 local scope
 4. 0 private scope
 
 #### 0 builtin scope
 
- - raise_constant_err
- - sealed_value
  - end
 
-#### 0 public scope
+#### 1 public scope
 
+ - raise_constant_err
  - end
 
 #### 0 local scope
@@ -285,19 +234,19 @@ def example(self, value):
 
 ### 2 CLASSES
 
-1. 2 builtin scope
-2. 0 public scope
+1. 1 builtin scope
+2. 1 public scope
 3. 0 local scope
 4. 0 private scope
 
-#### 0 builtin scope
+#### 1 builtin scope
 
  - ConstantError
- - private
  - end
 
-#### 0 public scope
+#### 1 public scope
 
+ - private
  - end
 
 #### 0 local scope
@@ -319,10 +268,6 @@ __on_builtin_scope__ = lambda named_obj : __set_builtin_scope__(named_obj.__name
 @__set_builtin_scope__("call_constant_functor")
 call_constant_functor = lambda f : f()
 
-@__on_builtin_scope__("getter_and_setter")
-@__clsr__
-getter_and_setter = lambda getter, setter : property(fget = getter, fset = setter)
-
 @__builtin_scope__
 class ConstantError(Exception):
     """
@@ -338,7 +283,6 @@ class ConstantError(Exception):
 @__on_builtin_scope__("constant_err")
 constant_err = ConstantError("const is immutable")
 
-@__builtin_scope__
 def raise_constant_err():
     """
     # function raise_constant_err()
@@ -349,29 +293,84 @@ def raise_constant_err():
     """
     raise constant_err
 
-@__set_builtin_scope__("const")
-const = lambda constant_function : getter_and_setter(constant_function)(raise_constant_err)
+class private(type):
+    """
+    # metaclass private
+    
+    ## as metaclass
 
-@__on_builtin_scope__
-def sealed_value(var):
-    @getter_and_setter(lambda self : var)
-    def ret(self, value):
-        nonlocal var
-        var = value
-    return ret
+    writing...
+    
+    ## static methods
+    
+    1. 9 LAMBDAS
+    2. 2 FUNCTIONS
 
-@__set_builtin_scope__("sealed_const")
-sealed_value = lambda value : const(lambda self : value)
+    ### 5 LAMBDAS
+    
+     - sealed_value = lambda value : const(lambda self : value)
+    
+    ````markdown
+    # function sealed_value
+    
+     - fin -
+    ````
 
-@__set_builtin_scope__("static")
-@__clsr__
+     - static = __clsr__(lambda __static__,     func : __smart_deco_wraps__(__partial__(func, __static__ = __static__)))
+    
+    ````markdown
+    # @static(__static__) decorator
+    
+     - fin -
+    ````
+    
+     - static_decocls = lambda cls : static(call_constant_functor(cls))
+    
+    ````markdown
+    # decorator static_decocls
+    
+     - fin -
+    ````
+    
+     - end
+    
+    ## 1 FUNCTIONS
+    
+    - sealed_value
+    - end
+    
+    ## as for lib
+
+    writing...
+    
+     - fin -
+    """
+    
+    @staticmethod
+    @__clsr__
+    seal = lambda getter, setter : property(fget = getter, fset = setter)
+
+    @staticmethod
+    const = lambda constant_function : private.seal(constant_function)(raise_constant_err)
+
+    @staticmethod
+    def sealed_value(var):
+        @private.seal(lambda self : var)
+        def ret(self, value):
+            nonlocal var
+            var = value
+        return ret
+
+    @staticmethod
+    const_value = lambda value : private.const(lambda self : value)
+
+    @staticmethod
+    @__clsr__
 static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __static__ = __static__))
 
-@__set_builtin_scope__("static_decocls")
-static_decocls = lambda cls : static(call_constant_functor(cls))
-
-@__on_builtin_scope__
-class private(type):
+    @staticmethod
+    static_decocls = lambda cls : static(call_constant_functor(cls))
+    
     def __new__(metacls, name, *argv):
         L = len(argv)
         assert L * L == L + L, f"private get 1 or 3 arguments but {L} given"
