@@ -41,7 +41,7 @@ private scoped python
 1. 1 CONSTANTS
 2. 4 LAMBDAS
 3. 1 FUNCTIONS
-4. 2 CLASSES
+4. 3 CLASSES
 
 ### 1 CONSTANTS
 
@@ -232,9 +232,9 @@ class AmamiyaGoro:
 
  - end
 
-### 2 CLASSES
+### 3 CLASSES
 
-1. 1 builtin scope
+1. 2 builtin scope
 2. 1 public scope
 3. 0 local scope
 4. 0 private scope
@@ -410,3 +410,6 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
                     return type("PrivatrWrapper", (), {i : (private if i == "private" else (__del__ if i == "__del__" else (__smart_deco_wraps__(j)(__partial__(j, this = self, __private__ = __private__)) if callable(j) else j)) for i, j in __dict__.items() if i != "__init__"}
            return type(metacls, name, argv[0], {i : private if i == "private" else (__smart_deco_wraps__(j)(__parital__(j, this = metacls, __private__ = metacls)) if callable(j) else j for i, j in __dict__.items()}
         else: return name.private # if L == 1 then just return private. check "as function"
+
+@__on_builtin_scope__
+class fuck_I_got_no_naming_time
