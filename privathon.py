@@ -412,4 +412,6 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
         else: return name.private # if L == 1 then just return private. check "as function"
 
 @__on_builtin_scope__
-class fuck_I_got_no_naming_time
+class name(metaclass = private):
+    @private.static({})
+    def __call__(self, __static__
