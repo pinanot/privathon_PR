@@ -413,8 +413,4 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
 
 @__on_builtin_scope__
 class name(metaclass = private):
-    @private.static({})
-    def __call__(self, libname, pw, __static__):
-        selfid = id(self)
-        if selfid in __static__:
-            assert __static__[libname][1] == 
+    def
