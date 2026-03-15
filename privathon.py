@@ -459,3 +459,10 @@ class LibOb(metaclass = PrivateObject):
     def __getitems__(self, libname, this, __private__):
         self.assertize_object()
         assert libname in __private__.data, f"lib not found error : no libname {libname} is this LibOb {this}'s {self}"
+        
+        class ImportLibOb:
+            @private.static(__private__.data[libname][1])
+            def __getattr__(self, key, __static__):
+                return __static__[key]
+        
+        return ImportLibOb()
