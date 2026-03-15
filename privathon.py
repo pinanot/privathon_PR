@@ -380,6 +380,9 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
     static_decocls = lambda cls : static(call_constant_functor(cls))
     
     def __new__(metacls, name, *argv):
+        return metacls.__new_core__(name, *argv)
+    
+    def __new_core__(metacls, name, *argv, pop_self_flag = True):
         """
         # privathon private class constructor
         
@@ -402,17 +405,17 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
                     __private__ = __dict__["private"]()
                     @const
                     def private(self):
-                        del self
+                        if pop_self_flag: del self
                         return this
                     def __del__(self):
                         __dict__["__del__"](self)
                         del private_wraps[selfid]
                     return type(
-                       "PrivatrWrapper",
+                       "PrivateWrapper",
                        (),
                        {
                            i : (
-                               private if i == "private" else (
+                               private if i == "private" else ( # as ob : PrivateWrapper, ob.private is original ob of private
                                __del__ if i == "__del__" else (
                                __smart_deco_wraps__(j)(__partial__(j, this = self, __private__ = __private__)) if callable(j) else j
                                )
@@ -434,6 +437,15 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
            )
         else: return name.private # if L == 1 then just return private. check "as function"
 
+class PrivateObject(private):
+    def __new__(metacls, name, *argv):
+        return metacls.__new_core__(name, *argv, pop_self_flag = False)
+
 @__on_builtin_scope__
-class name(metaclass = private):
-    def
+class LibOb(metaclass = PrivateObject):
+    class private:
+        data = private.sealed_value({})
+    
+    def __call__(self, libname, pw, this, __private__):
+        assert this != self, f"LibOb should be private object (PrivateWrapper), not public object {this} (LibOb), but {self} (self) is public"
+        pass
