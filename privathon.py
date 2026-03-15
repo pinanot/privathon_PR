@@ -445,6 +445,7 @@ class PrivateObject(private):
 class LibOb(metaclass = PrivateObject):
     class private:
         data = private.sealed_value({})
+        deco = private.sealed_value(private.static)
     
     def assertize_object(self, this, __private__):
         assert this != self, f"LibOb should be private object (PrivateWrapper), not public object {this} (LibOb), but {self} (self) is public"
@@ -454,15 +455,31 @@ class LibOb(metaclass = PrivateObject):
         if libname in __private__.data: assert __private__.data[libname][0] == hash(pw), "permission denied"
         else: __private__.data[libname] = (hash(pw), {})
         
-        pass
+        class LibObExporter:
+            @private.static(__private__.data[libname][1])
+            def __setattr__(self, varname, value, __static__):
+                __static__[varname] = value
+            
+            def __getattr__(self, varname):
+                def deco(value):
+                    return self.__setattr__(varname, value)
+                return deco
+            
+            def __neg__(self):
+                def deco(decorable):
+                    return self.__setattr__(decorable.__name__, value)
+                return deco
+        return LibObExporter()
     
-    def __getitems__(self, libname, this, __private__):
+    def __getattr__(self, libname, this, __private__):
         self.assertize_object()
         assert libname in __private__.data, f"lib not found error : no libname {libname} is this LibOb {this}'s {self}"
         
-        class ImportLibOb:
-            @private.static(__private__.data[libname][1])
-            def __getattr__(self, key, __static__):
-                return __static__[key]
+        if __private__.deco == private.static: __private__.deco = __private__.deco = __private__(__private__.data[libname][1])
         
-        return ImportLibOb()
+        class LibObImporter:
+            @private.static(__private__.data[libname][1])
+            def __getattr__(self, varname, __static__):
+                return __static__[varname]
+        
+        return LibObImporter()
