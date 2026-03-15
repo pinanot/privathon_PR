@@ -407,7 +407,18 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
                     def __del__(self):
                         __dict__["__del__"](self)
                         del private_wraps[selfid]
-                    return type("PrivatrWrapper", (), {i : (private if i == "private" else (__del__ if i == "__del__" else (__smart_deco_wraps__(j)(__partial__(j, this = self, __private__ = __private__)) if callable(j) else j)) for i, j in __dict__.items() if i != "__init__"}
+                    return type(
+                       "PrivatrWrapper",
+                       (),
+                       {
+                           i : (
+                               private if i == "private" else (
+                               __del__ if i == "__del__" else (
+                               __smart_deco_wraps__(j)(__partial__(j, this = self, __private__ = __private__)) if callable(j) else j
+                               )
+                           ) for i, j in __dict__.items() if i != "__init__"
+                       }
+                   )
            return type(metacls, name, argv[0], {i : private if i == "private" else (__smart_deco_wraps__(j)(__parital__(j, this = metacls, __private__ = metacls)) if callable(j) else j for i, j in __dict__.items()}
         else: return name.private # if L == 1 then just return private. check "as function"
 
