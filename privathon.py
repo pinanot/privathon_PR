@@ -446,6 +446,16 @@ class LibOb(metaclass = PrivateObject):
     class private:
         data = private.sealed_value({})
     
-    def __call__(self, libname, pw, this, __private__):
+    def assertize_object(self, this, __private__):
         assert this != self, f"LibOb should be private object (PrivateWrapper), not public object {this} (LibOb), but {self} (self) is public"
+    
+    def __call__(self, libname, pw, this, __private__):
+        self.assertize_object()
+        if libname in __private__.data: assert __private__.data[libname][0] == hash(pw), "permission denied"
+        else: __private__.data[libname] = (hash(pw), {})
+        
         pass
+    
+    def __getitems__(self, libname, this, __private__):
+        self.assertize_object()
+        assert libname in __private__.data, f"lib not found error : no libname {libname} is this LibOb {this}'s {self}"
