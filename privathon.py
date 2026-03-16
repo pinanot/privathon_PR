@@ -39,9 +39,9 @@ private scoped python
 ## RESOURCES
 
 1. 1 CONSTANTS
-2. 4 LAMBDAS
+2. 5 LAMBDAS
 3. 1 FUNCTIONS
-4. 3 CLASSES
+4. 4 CLASSES
 
 ### 1 CONSTANTS
 
@@ -74,14 +74,14 @@ private scoped python
 
  - end
 
-### 9 LAMBDAS
+### 5 LAMBDAS
 
-1. 4 builtin scope
+1. 5 builtin scope
 2. 0 public scope
 3. 0 local scope
 4. 0 private scope
 
-#### 4 builtin scope
+#### 5 builtin scope
 
  - __set_builtin_scope__ = __clsr__(lambda name, value : setattr(__builtin__, name, value))
 
@@ -194,6 +194,14 @@ class AmamiyaGoro:
  - fin -
 ````
 
+ - salted_pw = lambda pw: f"{salt()}{pw}"
+
+````markdown
+# function salted_pw
+
+ - fin -
+````
+
  - end
 
 #### 0 public scope
@@ -232,10 +240,10 @@ class AmamiyaGoro:
 
  - end
 
-### 3 CLASSES
+### 5 CLASSES
 
 1. 2 builtin scope
-2. 1 public scope
+2. 3 public scope
 3. 0 local scope
 4. 0 private scope
 
@@ -244,9 +252,11 @@ class AmamiyaGoro:
  - ConstantError
  - end
 
-#### 1 public scope
+#### 3 public scope
 
  - private
+ - PrivateObject
+ - LibOb
  - end
 
 #### 0 local scope
