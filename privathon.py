@@ -296,6 +296,9 @@ def raise_constant_err():
 @__set_builtin_scope__("salt")
 salt = lambda : hash(str(__unix_time__() + __random_of_unit_interval__()))
 
+@__set_builtin_scope__("salted_pw")
+salted_pw = lambda pw : f"{salt()}{pw}"
+
 class private(type):
     """
     # metaclass private
