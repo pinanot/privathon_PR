@@ -393,11 +393,16 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
     static_decocls = lambda cls : static(call_constant_functor(cls))
     
     def __new__(metacls, name, *argv):
+        """
+        # privathon private class real constructor
+        
+         - fin -
+        """
         return metacls.__new_core__(name, *argv)
     
     def __new_core__(metacls, name, *argv, pop_self_flag = True):
         """
-        # privathon private class constructor
+        # privathon private class fake constructor
         
         ## as constructor
         ## as function
@@ -451,46 +456,98 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
         else: return name.private # if L == 1 then just return private. check "as function"
 
 class PrivateObject(private):
+    """
+    # PrivateObject
+    
+     - fin -
+    """
     def __new__(metacls, name, *argv):
+        """
+        # class PrivateObject constructor
         return metacls.__new_core__(name, *argv, pop_self_flag = False)
 
 @__on_builtin_scope__
 class LibOb(metaclass = PrivateObject):
+    """
+    # LibOb
+    
+     - fin -
+    """
     class private:
         data = private.sealed_value({})
         deco = private.sealed_value(private.static)
     
     def assertize_object(self, this, __private__):
+        """
+        # method assertize_object
+        
+         - fin -
+        """
         assert this != self, f"LibOb should be private object (PrivateWrapper), not public object {this} (LibOb), but {self} (self) is public"
     
     def __call__(self, libname, pw, this, __private__):
+        """
+        # LibOb object(libname, pw)
+        
+         - fin -
+        """
         self.assertize_object()
         if libname in __private__.data: assert __private__.data[libname][0] == hash(pw), "permission denied"
         else: __private__.data[libname] = (hash(pw), {})
         
         class LibObExporter:
+            """
+            # class LibObExporter
+            
+             - fin -
+            """
             @private.static(__private__.data[libname][1])
             def __setattr__(self, varname, value, __static__):
+                """
+                # LibObExporter object.[varname] = value
+                
+                 - fin -
+                """
                 __static__[varname] = value
             
             def __getattr__(self, varname):
+                """
+                # LibObExporter decorator @object.[varname]
+                
+                 - fin -
+                """
                 def deco(value):
                     return self.__setattr__(varname, value)
                 return deco
             
             def __neg__(self):
+                """
+                # LibObExporter decorator @(-object)
+                
+                 - fin -
+                """
                 def deco(decorable):
                     return self.__setattr__(decorable.__name__, value)
                 return deco
         return LibObExporter()
     
     def __getattr__(self, libname, this, __private__):
+        """
+        # LibOb object.[libname]
+        
+         - fin -
+        """
         self.assertize_object()
         assert libname in __private__.data, f"lib not found error : no libname {libname} is this LibOb {this}'s {self}"
         
         if __private__.deco == private.static: __private__.deco = __private__.deco = __private__(__private__.data[libname][1])
         
         class LibObImporter:
+            """
+            # class LibObImporter
+            
+             - fin -
+            """
             @private.static(__private__.data[libname][1])
             def __getattr__(self, varname, __static__):
                 return __static__[varname]
