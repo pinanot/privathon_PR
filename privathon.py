@@ -4,6 +4,7 @@ from types import SimpleNamespace as namespace
 from martialaw.martialaw import martialaw as _clsr
 from martialaw.martialaw import partial as _partial
 from functools import wraps as _smart_deco_wraps
+from contextlib import contextmanager as __wither__
 import builtins as __builtin__
 
 """
@@ -14,7 +15,7 @@ private scoped python
 ## DEPENDENCY
 
 1. 1 modules
-2. 6 module::functions / module::classes
+2. 7 module::functions / module::classes
 3. 0 module::all_resource
 
 ### 1 modules
@@ -24,6 +25,7 @@ private scoped python
 
 ### 1 module::functions / module::classes
 
+ - contextlib::contextmanager as __wither__
  - martialaw.martialaw::martialaw as _clsr
  - martialaw.martialaw::partial as _partial
  - functools::wraps as _smart_deco_wraps
@@ -40,7 +42,7 @@ private scoped python
 
 1. 1 CONSTANTS
 2. 7 LAMBDAS
-3. 1 FUNCTIONS
+3. 2 FUNCTIONS
 4. 4 CLASSES
 
 ### 1 CONSTANTS
@@ -228,16 +230,19 @@ tip : fview is just another name of functional view
 
  - end
 
-### 1 FUCNTIONS
+### 2 FUCNTIONS
 
-1. 0 builtin scope
+1. 1 builtin scope
 2. 1 public scope
 3. 0 local scope
 4. 0 private scope
 
-#### 0 builtin scope
+#### 1 builtin scope
 
+ - __wither__
  - end
+
+tip : __wither__ is which imported __wither__ (bruh 💀)
 
 #### 1 public scope
 
@@ -321,10 +326,14 @@ salt = lambda : hash(str(_unix_time() + _random_of_unit_interval()))
 @__set_builtin_scope__("salted_pw")
 salted_pw = lambda pw : f"{salt()}{pw}"
 
+@__set_builtin_scope__
+__wither__ = __wither__
+
 @__set_builtin_scope__("functional_view")
 functional_view = _clsr(lambda real_f, view_f : _smart_deco_wraps(view_f)(real_f))
 
-__set_builtin_scope__("fview")(functional_view)
+@__set_builtin_scope__("fview")
+fview = functional_view
 
 class private(type):
     """
