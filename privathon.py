@@ -1,7 +1,7 @@
 from time import time as _unix_time
 from random import random as _random_of_unit_interval
 from types import SimpleNamespace as namespace
-from martialaw.martialaw import martialaw as __clsr__
+from martialaw.martialaw import martialaw as _clsr
 from martialaw.martialaw import partial as _partial
 from functools import wraps as _smart_deco_wraps
 import builtins as __builtin__
@@ -24,7 +24,7 @@ private scoped python
 
 ### 1 module::functions / module::classes
 
- - martialaw.martialaw::martialaw as __clsr__
+ - martialaw.martialaw::martialaw as _clsr
  - martialaw.martialaw::partial as _partial
  - functools::wraps as _smart_deco_wraps
  - types::SimpleNamespace as namespace
@@ -83,7 +83,7 @@ private scoped python
 
 #### 5 builtin scope
 
- - __set_builtin_scope__ = __clsr__(lambda name, value : setattr(__builtin__, name, value))
+ - __set_builtin_scope__ = _clsr(lambda name, value : setattr(__builtin__, name, value))
 
 ````markdown
 # @__set_builtin_scope__(name : str) decorator
@@ -202,7 +202,7 @@ class AmamiyaGoro:
  - fin -
 ````
 
- - functional_view = __clsr__(lambda real_f, view_f : __smart_deco_wraps__(view_f)(real_f)
+ - functional_view = _clsr(lambda real_f, view_f : __smart_deco_wraps__(view_f)(real_f)
 
 ````markdown
 # decorator @functional_view(real_f)
@@ -281,7 +281,7 @@ tip : fview is just another name of functional view
 
 """
 
-@__clsr__
+@_clsr
 __builtin__.__set_builtin_scope__ = lambda name, value : setattr(__builtin__, name, value)
 
 @__set_builtin_scope__("__builtin_scope__")
@@ -322,7 +322,7 @@ salt = lambda : hash(str(_unix_time() + _random_of_unit_interval()))
 salted_pw = lambda pw : f"{salt()}{pw}"
 
 @__set_builtin_scope__("functional_view")
-functional_view = __clsr__(lambda real_f, view_f : _smart_deco_wraps(view_f)(real_f))
+functional_view = _clsr(lambda real_f, view_f : _smart_deco_wraps(view_f)(real_f))
 
 __set_builtin_scope__("fview")(functional_view)
 
@@ -349,7 +349,7 @@ class private(type):
      - fin -
     ````
 
-     - static = __clsr__(lambda __static__,     func : _smart_deco_wraps(_partial(func, __static__ = __static__)))
+     - static = _clsr(lambda __static__,     func : _smart_deco_wraps(_partial(func, __static__ = __static__)))
     
     ````markdown
     # @static(__static__) decorator
@@ -380,7 +380,7 @@ class private(type):
     """
     
     @staticmethod
-    @__clsr__
+    @_clsr
     seal = lambda getter, setter : property(fget = getter, fset = setter)
 
     @staticmethod
@@ -403,7 +403,7 @@ class private(type):
     const_value = lambda value : private.const(lambda self : value)
 
     @staticmethod
-    @__clsr__
+    @_clsr
 static = lambda __static__, func : _smart_deco_wraps(_partial(func, __static__ = __static__))
 
     @staticmethod
