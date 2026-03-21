@@ -39,7 +39,7 @@ private scoped python
 ## RESOURCES
 
 1. 1 CONSTANTS
-2. 5 LAMBDAS
+2. 7 LAMBDAS
 3. 1 FUNCTIONS
 4. 4 CLASSES
 
@@ -74,9 +74,9 @@ private scoped python
 
  - end
 
-### 5 LAMBDAS
+### 7 LAMBDAS
 
-1. 5 builtin scope
+1. 7 builtin scope
 2. 0 public scope
 3. 0 local scope
 4. 0 private scope
@@ -202,6 +202,18 @@ class AmamiyaGoro:
  - fin -
 ````
 
+ - functional_view = __clsr__(lambda real_f, view_f : __smart_deco_wraps__(view_f)(real_f)
+
+````markdown
+# decorator @functional_view(real_f)
+
+ - fin - 
+````
+
+ - fview = functional view
+
+tip : fview is just another name of functional view
+
  - end
 
 #### 0 public scope
@@ -308,6 +320,11 @@ salt = lambda : hash(str(__unix_time__() + __random_of_unit_interval__()))
 
 @__set_builtin_scope__("salted_pw")
 salted_pw = lambda pw : f"{salt()}{pw}"
+
+@__set_builtin_scope__("functional_view")
+functional_view = __clsr__(lambda real_f, view_f : __smart_deco_wraps__(view_f)(real_f))
+
+__set_builtin_scope__("fview")(functional_view)
 
 class private(type):
     """
