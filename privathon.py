@@ -320,19 +320,30 @@ def raise_constant_err():
     """
     raise constant_err
 
-@__set_builtin_scope__("salt")
+@__on_builtin_scope__("salt")
 salt = lambda : hash(str(_unix_time() + _random_of_unit_interval()))
 
-@__set_builtin_scope__("salted_pw")
+@__on_builtin_scope__("salted_pw")
 salted_pw = lambda pw : f"{salt()}{pw}"
 
-@__set_builtin_scope__
+@__on_builtin_scope__("__wither__")
 __wither__ = __wither__
 
-@__set_builtin_scope__("functional_view")
+@__set_builtin_scope__
+@__wither__
+def scoped_var(var):
+    """
+    # with scoped_var(value) as var
+    
+     - fin -
+    """
+    yield var
+    delete var
+
+@__on_builtin_scope__("functional_view")
 functional_view = _clsr(lambda real_f, view_f : _smart_deco_wraps(view_f)(real_f))
 
-@__set_builtin_scope__("fview")
+@__on_builtin_scope__("fview")
 fview = functional_view
 
 class private(type):
