@@ -1,9 +1,9 @@
-from time import time as __unix_time__
-from random import random as __random_of_unit_interval__
+from time import time as _unix_time
+from random import random as _random_of_unit_interval
 from types import SimpleNamespace as namespace
 from martialaw.martialaw import martialaw as __clsr__
-from martialaw.martialaw import partial as __partial__
-from functools import wraps as __smart_deco_wraps__
+from martialaw.martialaw import partial as _partial
+from functools import wraps as _smart_deco_wraps
 import builtins as __builtin__
 
 """
@@ -25,11 +25,11 @@ private scoped python
 ### 1 module::functions / module::classes
 
  - martialaw.martialaw::martialaw as __clsr__
- - martialaw.martialaw::partial as __partial__
- - functools::wraps as __smart_deco_wraps__
+ - martialaw.martialaw::partial as _partial
+ - functools::wraps as _smart_deco_wraps
  - types::SimpleNamespace as namespace
- - time::time as __unix_time__
- - random::random as __random_of_unit_interval__
+ - time::time as _unix_time
+ - random::random as _random_of_unit_interval
  - end
 
 ### 0 module::all_resource
@@ -186,7 +186,7 @@ class AmamiyaGoro:
  - fin -
 ````
 
- - salt = lambda : hash(str(__unix_time__() + __random_of_unit_interval__()))
+ - salt = lambda : hash(str(_unix_time() + _random_of_unit_interval()))
 
 ````markdown
 # function salt
@@ -316,13 +316,13 @@ def raise_constant_err():
     raise constant_err
 
 @__set_builtin_scope__("salt")
-salt = lambda : hash(str(__unix_time__() + __random_of_unit_interval__()))
+salt = lambda : hash(str(_unix_time() + _random_of_unit_interval()))
 
 @__set_builtin_scope__("salted_pw")
 salted_pw = lambda pw : f"{salt()}{pw}"
 
 @__set_builtin_scope__("functional_view")
-functional_view = __clsr__(lambda real_f, view_f : __smart_deco_wraps__(view_f)(real_f))
+functional_view = __clsr__(lambda real_f, view_f : _smart_deco_wraps(view_f)(real_f))
 
 __set_builtin_scope__("fview")(functional_view)
 
@@ -349,7 +349,7 @@ class private(type):
      - fin -
     ````
 
-     - static = __clsr__(lambda __static__,     func : __smart_deco_wraps__(__partial__(func, __static__ = __static__)))
+     - static = __clsr__(lambda __static__,     func : _smart_deco_wraps(_partial(func, __static__ = __static__)))
     
     ````markdown
     # @static(__static__) decorator
@@ -404,7 +404,7 @@ class private(type):
 
     @staticmethod
     @__clsr__
-static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __static__ = __static__))
+static = lambda __static__, func : _smart_deco_wraps(_partial(func, __static__ = __static__))
 
     @staticmethod
     static_decocls = lambda cls : static(call_constant_functor(cls))
@@ -452,7 +452,7 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
                            i : (
                                private if i == "private" else ( # as ob : PrivateWrapper, ob.private is original ob of private
                                __del__ if i == "__del__" else (
-                               __smart_deco_wraps__(j)(__partial__(j, this = self, __private__ = __private__)) if callable(j) else j
+                               _smart_deco_wraps(j)(_partial(j, this = self, __private__ = __private__)) if callable(j) else j
                                )
                                )
                            ) for i, j in __dict__.items() if i != "__init__"
@@ -465,7 +465,7 @@ static = lambda __static__, func : __smart_deco_wraps__(__partial__(func, __stat
                {
                    i : (
                        private if i == "private" else (
-                       __smart_deco_wraps__(j)(__parital__(j, this = metacls, __private__ = metacls)) if callable(j) else j
+                       _smart_deco_wraps(j)(_partial(j, this = metacls, __private__ = metacls)) if callable(j) else j
                    )
                    ) for i, j in __dict__.items()
                }
