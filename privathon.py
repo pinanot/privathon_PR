@@ -481,6 +481,9 @@ class PrivateObject(private):
     def __new__(metacls, name, *argv):
         """
         # class PrivateObject constructor
+
+        ...writing...
+        """
         return metacls.__new_core__(name, *argv, pop_self_flag = False)
 
 @__on_builtin_scope__
